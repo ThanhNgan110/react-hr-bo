@@ -1,0 +1,14 @@
+@font-face {
+  font-family: 'FunnelSans-Italic';
+  src: url(/assets/fonts/FunnelSans-Italic.ttf);
+}
+
+* {
+  font-family: 'FunnelSans-Italic', Courier, monospace;
+}
+
+.user-icon {
+  width: 100px;
+  height: 100px;
+  background: url(/assets/images/user-icon.webp) 50% no-repeat;
+}
