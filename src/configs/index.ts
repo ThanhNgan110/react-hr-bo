@@ -12,3 +12,13 @@ export const USER_ROLE = {
   OPERATOR: 'Operator',
   MEMBER: 'Member'
 }
+
+export const PATH = {
+  ROOT: '/',
+  LOGIN: '/login',
+  REGISTER: '/register',
+  EMPLOYEE_LIST: '/employee/list',
+  EMPLOYEE_CREATE: '/employee/create',
+  EMPLOYEE_EDIT: '/employee/edit/:id',
+  EMPLOYEE_SHOW: '/employee/show/:id'
+}
