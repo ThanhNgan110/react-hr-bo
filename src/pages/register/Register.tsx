@@ -1,13 +1,20 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { EyeCloseIcon, EyeIcon } from "../../icons";
 import { PATH } from "../../configs";
 import Label from "../../components/atoms/label";
 import Input from "../../components/atoms/field/input-field";
 import ThemeTogglerTwo from "../../components/atoms/button/theme-toggle-two";
+import Button from "../../components/atoms/button/button";
 
 function Register() {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = React.useState(false);
+
+  function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    navigate(PATH.LOGIN)
+  }
   
   return (
     <div className="relative p-6 bg-white z-1 dark:bg-gray-900 sm:p-0">
@@ -76,7 +83,7 @@ function Register() {
                     </span>
                   </div>
                 </div>
-                <form>
+                <form onSubmit={onSubmit}>
                   <div className="space-y-5">
                     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                       {/* <!-- First Name --> */}
@@ -140,9 +147,12 @@ function Register() {
                     </div>
                     {/* <!-- Button --> */}
                     <div>
-                      <button className="flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600">
+                      <Button
+                        type="submit"
+                        className="w-full"
+                      >
                         Sign Up
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 </form>
@@ -195,3 +205,8 @@ function Register() {
 }
 
 export default Register
+
+
+// atoms: html input, label, typography
+// molecules: group of atoms, generic component. Modal (close + slot content) -> contain code logic (show/hide model + style)
+// organisms: domain specific component: LoginModal (group molecules, atoms) -> Modal + label + form input

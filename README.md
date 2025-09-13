@@ -4,3 +4,9 @@
 - snake_case: first_name, last_name, username ...
 - kebab-case: product-detail, product, first-name ...
 - UPPERCASE: API_URL, USER_ROLE, PATH ...
+
+
+# How to optimize performance react
+- lazy load component -> it just load resource of page, not load resource
+- code-splitting component -> just load resource when user action. Ex: when user input password field, it will load validate password library
+- performance hook: prevent component re-render uneccessary - memo, useMemo, useCallback

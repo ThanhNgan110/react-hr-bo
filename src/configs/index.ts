@@ -16,6 +16,7 @@ export const USER_ROLE = {
 export const PATH = {
   ROOT: '/',
   LOGIN: '/login',
+  DASHBOARD: '/dashboard',
   REGISTER: '/register',
   EMPLOYEE_LIST: '/employee/list',
   EMPLOYEE_CREATE: '/employee/create',
