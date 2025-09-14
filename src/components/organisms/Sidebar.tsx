@@ -23,7 +23,7 @@ const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
     name: "Dashboard",
-    path: PATH.ROOT,
+    path: PATH.DASHBOARD,
   },
   {
     icon: <UserIcon />,

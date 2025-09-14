@@ -8,6 +8,7 @@ import { Template1 } from "./layouts/template1"
 import { Template2 } from "./layouts/template2"
 import AuthRoute from "./routes/AuthRoute";
 import GuestRoute from "./routes/GuestRoute";
+import RoleRoute from "./routes/RoleRoute";
 
 
 const Dashboard = React.lazy(() => import('./pages/dashboard').then(module => ({ default: module.default })))
@@ -39,18 +40,84 @@ function App() {
       break
   }
 
+  const routeConfig  = [
+    {
+      path: PATH.DASHBOARD,
+      component: Dashboard,
+      guard: AuthRoute,
+      layout: Template,
+      requireRole: ['admin', 'operator']
+    },
+    {
+      path: PATH.LOGIN,
+      component: Login,
+      guard: GuestRoute,
+    },
+    {
+      path: PATH.REGISTER,
+      component: Register,
+      guard: GuestRoute,
+    },
+    {
+      path: PATH.EMPLOYEE_CREATE,
+      component: EmployeeCreate,
+      guard: AuthRoute,
+      layout: Template,
+      requireRole: ['admin', 'operator']
+    },
+    {
+      path: PATH.EMPLOYEE_LIST,
+      component: EmployeeList,
+      guard: AuthRoute,
+      layout: Template,
+      requireRole: ['admin', 'operator']
+    },
+    {
+      path: PATH.EMPLOYEE_EDIT,
+      component: EmployeeEdit,
+      guard: AuthRoute,
+      layout: Template,
+      requireRole: ['admin', 'operator']
+    },
+    {
+      path: PATH.EMPLOYEE_SHOW,
+      component: EmployeeShow,
+      guard: AuthRoute,
+      layout: Template,
+      requireRole: ['admin', 'operator']
+    },
+    {
+      path: PATH.NOT_FOUND,
+      component: NotFound,
+    },
+  ]
+
   return (
     <>
       <React.Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path={PATH.ROOT} element={<Navigate to={PATH.DASHBOARD} />} />
-          <Route path={PATH.DASHBOARD} element={<AuthRoute><Template><Dashboard /></Template></AuthRoute>} />
-          <Route path={PATH.LOGIN} element={<GuestRoute><Login /></GuestRoute>} />
-          <Route path={PATH.REGISTER} element={<GuestRoute><Register /></GuestRoute>} />
-          <Route path={PATH.EMPLOYEE_CREATE} element={<AuthRoute><Template><EmployeeCreate /></Template></AuthRoute>} />
-          <Route path={PATH.EMPLOYEE_LIST} element={<AuthRoute><Template><EmployeeList /></Template></AuthRoute>} />
-          <Route path={PATH.EMPLOYEE_EDIT} element={<AuthRoute><Template><EmployeeEdit /></Template></AuthRoute>} />
-          <Route path={PATH.EMPLOYEE_SHOW} element={<AuthRoute><Template><EmployeeShow /></Template></AuthRoute>} />
+          {routeConfig.map(route => {
+            const Guard = route?.guard || React.Fragment;
+            const Layout = route?.layout || React.Fragment;
+            const Component = route?.component || React.Fragment;
+
+            return (
+              <Route 
+                key={route.path}
+                path={route.path} 
+                element={
+                  <Guard>
+                    <Layout>
+                      <RoleRoute requireRoles={route.requireRole}>  
+                        <Component />
+                      </RoleRoute>
+                    </Layout>
+                  </Guard>
+                } 
+              />
+            )
+          })}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </React.Suspense>

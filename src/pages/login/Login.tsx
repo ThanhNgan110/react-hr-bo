@@ -8,6 +8,7 @@ import Label from "../../components/atoms/label";
 import Input from "../../components/atoms/field/input-field";
 import Button from "../../components/atoms/button/button";
 import ThemeTogglerTwo from "../../components/atoms/button/theme-toggle-two";
+import { httpRequest } from "../../services/initRequest";
 
 
 function Login() {
@@ -17,6 +18,17 @@ function Login() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
+      const bodyData = {
+        "data": {
+          "email": "hai1@gmail.com",
+          "password": "123456"
+        }
+      }
+      const res = await httpRequest('/api/user/signin', {
+        method: 'POST',
+        data: bodyData
+      });
+      const { access_token, refresh_token } = res?.data || {}
       toast.success('Login Successfully!', {
         position: "top-right",
         autoClose: 3000,
@@ -26,7 +38,8 @@ function Login() {
         draggable: true,
         progress: undefined,
       });
-      window.localStorage.setItem('access_token', 'tony');
+      window.localStorage.setItem('access_token', access_token);
+      window.localStorage.setItem('refresh_token', refresh_token);
       navigate(PATH.ROOT);
     } catch (err: any) {
       const message = err.response?.data?.msg || 'Login Fail!'
