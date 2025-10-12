@@ -4,11 +4,12 @@ import { useNavigate } from "react-router";
 import { PATH } from "../../configs";
 import { Popover } from "../molecules/Popover";
 import { DropdownItem } from "../atoms/field/DropdownField";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../store";
 
 export default function UserDropdown() {
   const navigate = useNavigate();
-  const user = null;
-
+  const user = useSelector((state: RootState) => state.user.user);
   const [isOpen, setIsOpen] = useState(false);
 
   function handleLogout() {
@@ -61,10 +62,10 @@ export default function UserDropdown() {
       >
         <div>
           <span className="block font-medium text-gray-700 text-theme-sm dark:text-gray-400">
-            Musharof Chowdhury
+            {user?.first_name} {user?.last_name}
           </span>
           <span className="mt-0.5 block text-theme-xs text-gray-500 dark:text-gray-400">
-            randomuser@pimjo.com
+            {user?.email}
           </span>
         </div>
 

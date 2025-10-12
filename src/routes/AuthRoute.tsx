@@ -2,19 +2,26 @@ import React from 'react'
 import { Navigate, useNavigate } from 'react-router';
 import { PATH } from '../configs';
 import { httpRequest } from '../services/initRequest';
+import { useDispatch } from 'react-redux';
+import { updateUser } from '../redux/userSlice';
 
 function AuthRoute({ children }: React.PropsWithChildren) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const access_token = window.localStorage.getItem('access_token');
   const [initialized, setInitialized] = React.useState(false);
-  
+
   React.useEffect(() => {
+    if (initialized) return;
+    
     async function getMe() {
       try {
-        await httpRequest('/api/auth', {
+        const data: any = await httpRequest('/api/auth', {
           method: 'POST',
         });
+        const user = data?.user.user;
         setInitialized(true);
+        dispatch(updateUser(user))
       } catch (err: any) {
         window.localStorage.clear();
         navigate(PATH.LOGIN);
