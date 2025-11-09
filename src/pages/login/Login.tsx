@@ -20,7 +20,7 @@ function Login() {
     try {
       const bodyData = {
         "data": {
-          "email": "hai1@gmail.com",
+          "email": "test456@gmail.com",
           "password": "123456"
         }
       }
